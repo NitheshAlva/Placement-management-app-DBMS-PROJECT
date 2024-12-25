@@ -50,7 +50,7 @@ class StudentService {
         const { count: employerCount, error: employerCountError } = await supabase
             .from('employers')
             .select('*', { count: 'exact', head: true })
-            .eq('email', email);
+            .eq('contact_email', email);
         if (employerCountError) {
             console.error('Employer count error:', employerCountError);
             return employerCountError.message;

@@ -4,8 +4,8 @@ import { Navigate } from 'react-router-dom';
 
 const withAuth = (WrappedComponent, allowedRoles) => {
   return (props) => {
-    const { status,role } = useSelector((state) => state.auth);
-
+    const { status,role,data } = useSelector((state) => state.auth);
+    console.log(data)
     if (status === 'unauthenticated') {
       return <Navigate to="/" replace />;
     }
@@ -13,7 +13,6 @@ const withAuth = (WrappedComponent, allowedRoles) => {
     if (allowedRoles && !allowedRoles.includes(role)) {
       return <Navigate to="/" replace />;
     }
-
     return <WrappedComponent {...props} />;
   };
 };

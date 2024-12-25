@@ -67,8 +67,7 @@ class EmployerService {
         
         
         const resp = await this.loginEmployer(email,password,0)
-        await this.logoutEmployer(0)
-        if(resp){
+        if(!resp.success){
           const { error: authError } = await supabase.auth.signUp({
             email,
             password,
@@ -84,7 +83,7 @@ class EmployerService {
               console.error('Auth signup error:', authError);
               return authError.message;
           }
-        }        
+        }    
         
         return await insertEmployer();
     } catch (error) {

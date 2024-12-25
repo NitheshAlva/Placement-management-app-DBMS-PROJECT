@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import supabase from '../supabase/client.js';
 import studentService from '../supabase/StudentService.js';
 import employerService from '../supabase/EmployerService.js';
-import { useDispatch } from 'react-redux';
 import { setAuthenticated, setUnauthenticated } from '../store/authSlice.js';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   
-  // Determine login role (student or employer)
   const role = new URLSearchParams(location.search).get('role') || 'student';
 
-  // Listen for auth state changes to handle sign-out
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_OUT') {
@@ -31,82 +32,98 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setErrorMsg('');
     
-    let resp;
-    let data;
+    try {
+      let resp;
+      let data;
 
-    // Call appropriate service based on role
-    if (role === 'student') {
-      resp = await studentService.loginStudent(email, password);
-      data = resp?.data?.usn;
-    } else {
-      resp = await employerService.loginEmployer(email, password);
-      data = resp?.data?.employer_id;
+      if (role === 'student') {
+        resp = await studentService.loginStudent(email, password);
+        data = resp?.data?.usn;
+      } else {
+        resp = await employerService.loginEmployer(email, password);
+        data = resp?.data?.employer_id;
+      }
+
+      if (!resp?.success) {
+        setErrorMsg(resp?.error || 'Login failed');
+        return;
+      }
+
+      dispatch(setAuthenticated({ role, data }));
+      navigate(`/${role}/dashboard`);
+    } catch (error) {
+      setErrorMsg('An unexpected error occurred');
+    } finally {
+      setIsLoading(false);
     }
-
-    // Handle errors
-    if (!resp?.success) {
-      setErrorMsg(resp?.error || 'Login failed');
-      return;
-    }
-
-    // Set authentication in global state, navigate to dashboard
-    dispatch(setAuthenticated({ role, data }));
-    navigate(`/${role}/dashboard`);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-          Login as {role.charAt(0).toUpperCase() + role.slice(1)}
-        </h1>
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email Section */}
-          <div>
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
-              Email
-            </label>
-            <input
-              id="email"
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 className="text-center text-3xl font-extrabold text-gray-900">
+          Sign in to your account
+        </h2>
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Or{' '}
+          <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
+            create a new account
+          </Link>
+        </p>
+      </div>
+
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <Input
+              label="Email address"
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              autoComplete="email"
             />
-          </div>
 
-          {/* Password Section */}
-          <div>
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
-              Password
-            </label>
-            <input
-              id="password"
+            <Input
+              label="Password"
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              autoComplete="current-password"
             />
-          </div>
 
-          {/* Error Message */}
-          {errorMsg && (
-            <div className="text-red-600 text-sm">
-              {errorMsg}
+            {errorMsg && (
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
+                {errorMsg}
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              fullWidth
+              disabled={isLoading}
+            >
+              {isLoading ? 'Signing in...' : 'Sign in'}
+            </Button>
+          </form>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  Signing in as {role}
+                </span>
+              </div>
             </div>
-          )}
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Login
-          </button>
-        </form>
+          </div>
+        </div>
       </div>
     </div>
   );

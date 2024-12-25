@@ -32,7 +32,8 @@ class OtherService{
             employers (
               company_name,
               employer_id,
-              contact_email
+              contact_email,
+              industry_type
             )
           `)
           .eq('job_id', job_id)
@@ -92,10 +93,7 @@ class OtherService{
           const { data, error } = await supabase
             .from('applications')
             .select(`
-                app_id,
-                usn,
-                job_id,
-                status,
+                *,
                 jobs(
                   title,
                   employer_id,
@@ -144,7 +142,7 @@ class OtherService{
             console.error("Error fetching placement details:", error.message);
             return { success: false, error: error.message };
           }
-          console.log(data[0])
+          console.log(data)
           return { success: true, data:data[0] };
         } catch (err) {
           console.error("Error fetching placement details:", err.message);
