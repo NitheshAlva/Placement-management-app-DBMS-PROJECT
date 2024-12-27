@@ -15,7 +15,6 @@ class OtherService{
           if (error) {
             return { success: false, error: error.message };
           }
-          console.log(data);
           return { success: true, data };
         } catch (err) {
           console.error('Error fetching jobs:', err);
@@ -80,7 +79,6 @@ class OtherService{
           if (error) {
             return { success: false, error: error.message };
           }
-          console.log(data);
           return { success: true, data };
         } catch (err) {
           console.error('Error fetching applications:', err);
@@ -96,6 +94,8 @@ class OtherService{
                 *,
                 jobs(
                   title,
+                  location,
+                  salary,
                   employer_id,
                   employers(
                     company_name
@@ -107,7 +107,6 @@ class OtherService{
           if (error) {
             return { success: false, error: error.message };
           }
-          console.log(data);
           return { success: true, data };
         } catch (err) {
           console.error('Error fetching applications:', err);
@@ -142,7 +141,6 @@ class OtherService{
             console.error("Error fetching placement details:", error.message);
             return { success: false, error: error.message };
           }
-          console.log(data)
           return { success: true, data:data[0] };
         } catch (err) {
           console.error("Error fetching placement details:", err.message);

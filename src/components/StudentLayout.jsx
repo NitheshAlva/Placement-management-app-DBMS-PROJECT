@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import studentService from '../supabase/StudentService';
 import withAuth from './withAuth';
 import { useDispatch } from 'react-redux';
@@ -8,6 +8,7 @@ import { setUnauthenticated } from '../store/authSlice';
 function StudentLayout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLogout = async () => {
@@ -22,10 +23,17 @@ function StudentLayout() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const getLinkClasses = (path) => {
+    const activeClasses = "bg-blue-50 text-blue-700 font-medium";
+    const inactiveClasses = "text-gray-700 hover:bg-blue-50 hover:text-blue-700";
+    
+    return  location.pathname.startsWith(path) ? activeClasses : inactiveClasses;
+  }
+
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Mobile Navigation Bar */}
-      <div className="fixed top-0 left-0 right-0 h-16 bg-white shadow-md z-40 lg:hidden">
+      <div className="fixed top-0 left-0 right-0 h-16 bg-white shadow-md z-50 lg:hidden">
         <div className="flex items-center justify-between px-4 h-full">
           <button
             onClick={toggleSidebar}
@@ -49,17 +57,17 @@ function StudentLayout() {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
+      <aside className={`fixed lg:sticky top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform flex-shrink-0 z-50 duration-300 ease-in-out lg:translate-x-0 ${
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-screen">
           <div className="p-4 border-b">
             <h2 className="text-xl font-bold text-gray-800">Student Portal</h2>
           </div>
           <nav className="flex-1 overflow-y-auto p-4 space-y-2">
             <Link
               to="/student/dashboard"
-              className="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              className={`flex items-center px-4 py-3 rounded-lg transition-colors ${getLinkClasses('/student/dashboard')}`}
               onClick={() => setIsSidebarOpen(false)}
             >
               <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +77,7 @@ function StudentLayout() {
             </Link>
             <Link
               to="/student/profile"
-              className="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              className={`flex items-center px-4 py-3 rounded-lg transition-colors ${getLinkClasses('/student/profile')}`}
               onClick={() => setIsSidebarOpen(false)}
             >
               <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,7 +87,7 @@ function StudentLayout() {
             </Link>
             <Link
               to="/student/jobs"
-              className="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              className={`flex items-center px-4 py-3 rounded-lg transition-colors ${getLinkClasses('/student/jobs')}`}
               onClick={() => setIsSidebarOpen(false)}
             >
               <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,7 +97,7 @@ function StudentLayout() {
             </Link>
             <Link
               to="/student/applications"
-              className="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              className={`flex items-center px-4 py-3 rounded-lg transition-colors ${getLinkClasses('/student/applications')}`}
               onClick={() => setIsSidebarOpen(false)}
             >
               <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +107,7 @@ function StudentLayout() {
             </Link>
             <Link
               to="/student/interviews"
-              className="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              className={`flex items-center px-4 py-3 rounded-lg transition-colors ${getLinkClasses('/student/interviews')}`}
               onClick={() => setIsSidebarOpen(false)}
             >
               <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,7 +117,7 @@ function StudentLayout() {
             </Link>
             <Link
               to="/student/placements"
-              className="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              className={`flex items-center px-4 py-3 rounded-lg transition-colors ${getLinkClasses('/student/placements')}`}
               onClick={() => setIsSidebarOpen(false)}
             >
               <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

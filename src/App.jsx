@@ -58,7 +58,6 @@ function AppContent() {
           dispatch(setUnauthenticated());
           return;
         }
-        console.log('User:', userResp.user);
         const role = userResp.user.user_metadata?.role;
         let data;
         if (role === 'student') {

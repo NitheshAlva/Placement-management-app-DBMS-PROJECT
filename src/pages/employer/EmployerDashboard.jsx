@@ -189,7 +189,7 @@ const EmployerDashboard = () => {
               </div>
               <div className="space-y-4">
                 {applications.slice(0, 5).map((application) => (
-                  <div key={application.application_id} className="border-b border-gray-200 last:border-0 pb-4 last:pb-0">
+                  <div key={application.app_id} className="border-b border-gray-200 last:border-0 pb-4 last:pb-0">
                     <div className="flex justify-between items-start">
                       <div>
                         <h3 className="font-medium text-gray-900">{application.title}</h3>

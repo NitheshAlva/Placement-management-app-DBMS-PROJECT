@@ -85,7 +85,7 @@ const ApplicationsPage = () => {
               <div className="space-y-2 flex-grow">
                 <p className="text-sm text-gray-600">
                   <span className="font-medium">Applied:</span>{' '}
-                  {new Date(app.application_date).toLocaleDateString()}
+                  {new Date(app.date_applied).toLocaleDateString()}
                 </p>
                 <p className="text-sm text-gray-600">
                   <span className="font-medium">Location:</span>{' '}

@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom';
 const withAuth = (WrappedComponent, allowedRoles) => {
   return (props) => {
     const { status,role,data } = useSelector((state) => state.auth);
-    console.log(data)
     if (status === 'unauthenticated') {
       return <Navigate to="/" replace />;
     }
