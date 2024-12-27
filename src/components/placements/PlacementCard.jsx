@@ -3,7 +3,7 @@ import { Card } from '../ui/Card';
 
 export function PlacementCard({ placement }) {
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-200">
+    <Card className="hover:shadow-lg transition-shadow duration-200 mb-6">
       <div className="p-6">
         <h3 className="text-xl font-semibold text-gray-900">{placement.employers.company_name}</h3>
         

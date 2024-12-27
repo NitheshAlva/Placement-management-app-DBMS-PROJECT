@@ -36,7 +36,7 @@ const PlacementsPage = () => {
     e.preventDefault();
     setErrorMsg('');
     setSuccessMsg('');
-    const resp = await empService.insertPlacement(newPlacement);
+    const resp = await empService.insertPlacement(newPlacement,employerId);
     if (!resp.success) {
       setErrorMsg(resp.error);
       return;

@@ -141,7 +141,7 @@ class OtherService{
             console.error("Error fetching placement details:", error.message);
             return { success: false, error: error.message };
           }
-          return { success: true, data:data[0] };
+          return { success: true, data:data };
         } catch (err) {
           console.error("Error fetching placement details:", err.message);
           return { success: false, error: err.message };

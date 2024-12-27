@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Card } from '../../components/ui/Card';
 
 export default function PlacementsPage() {
-  const [placement, setPlacement] = useState(null);
+  const [placements, setPlacements] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const usn = useSelector(state => state.auth.data);
@@ -17,7 +17,7 @@ export default function PlacementsPage() {
         if (!resp.success) {
           throw new Error(resp.error);
         }
-        setPlacement(resp.data);
+        setPlacements(resp.data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -46,8 +46,10 @@ export default function PlacementsPage() {
         </div>
       )}
 
-      {placement ? (
-        <PlacementCard placement={placement} />
+      {placements.length>0 ? (
+        placements.map(placement=>(
+          <PlacementCard  key={placement.placement_id} placement={placement} />
+        ))
       ) : (
         <Card>
           <div className="p-12 text-center">

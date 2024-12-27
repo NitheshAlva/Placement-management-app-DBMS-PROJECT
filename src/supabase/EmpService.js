@@ -299,7 +299,7 @@ getJobsAndPlacementsByEmployer = async (jobs,employerId) => {
 };
 
 
-insertPlacement = async({ usn, job_id, package_offered, joining_date }) => {
+insertPlacement = async({ usn, job_id, package_offered, joining_date },employer_id) => {
   if (!usn || !job_id || !package_offered || !joining_date) {
     return { success: false, error: 'All fields are required' };
   }
@@ -312,7 +312,7 @@ insertPlacement = async({ usn, job_id, package_offered, joining_date }) => {
         job_id,
         package_offered,
         joining_date,
-        
+        employer_id
       })
       .select();
 
