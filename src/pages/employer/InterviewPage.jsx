@@ -74,7 +74,7 @@ const InterviewPage = () => {
         </div>
       )}
 
-      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8">
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-xl font-semibold mb-4">Schedule New Interview</h2>
         <form onSubmit={handleSubmitNewInterview} className="space-y-4">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -149,54 +149,50 @@ const InterviewPage = () => {
         </form>
       </div>
 
-      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+      <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Scheduled Interviews</h2>
-        <div className="overflow-x-auto -mx-4 sm:-mx-6">
-          <div className="inline-block min-w-full py-2 align-middle px-4 sm:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Applicant USN</th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Job Title</th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mode</th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Round</th>
-                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">Actions</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {interviews.map(interview => (
-                    <tr key={interview.interview_id}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{interview.usn}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{interview.title}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{new Date(interview.date).toLocaleString()}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{interview.interview_mode}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{interview.round}</td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <button 
-                          onClick={() => handleDeleteInterview(interview.interview_id)}
-                          className="text-red-600 hover:text-red-900"
-                        >
-                          Delete<span className="sr-only">, {interview.usn}</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        <div className="space-y-6">
+          {interviews.map(interview => (
+            <div key={interview.interview_id} className="border border-gray-200 rounded-md p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <p className="text-sm text-gray-600">Applicant USN</p>
+                  <p className="font-medium">{interview.usn}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Job Title</p>
+                  <p className="font-medium">{interview.title}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Date</p>
+                  <p className="font-medium">{new Date(interview.date).toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Mode</p>
+                  <p className="font-medium">{interview.interview_mode}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Round</p>
+                  <p className="font-medium">{interview.round}</p>
+                </div>
+                <div className="flex items-end">
+                  <button 
+                    onClick={() => handleDeleteInterview(interview.interview_id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-200"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
+          {interviews.length === 0 && (
+            <p className="text-center text-gray-500 my-4">No interviews scheduled yet.</p>
+          )}
         </div>
-        {interviews.length === 0 && (
-          <p className="text-center text-gray-500 my-4">No interviews scheduled yet.</p>
-        )}
       </div>
     </div>
   );
 };
 
 export default InterviewPage;
-
