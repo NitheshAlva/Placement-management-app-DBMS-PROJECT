@@ -44,7 +44,14 @@ function EmployerLayout() {
             </svg>
           </button>
           <h1 className="text-lg font-bold text-gray-800">Employer Portal</h1>
-          <div className="w-6"></div> {/* Spacer for alignment */}
+          <button
+            onClick={handleLogout}
+            className="p-2 rounded-lg text-red-600 hover:bg-red-50"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -126,7 +133,7 @@ function EmployerLayout() {
               Placements
             </Link>
           </nav>
-          <div className="p-4 border-t">
+          <div className="hidden lg:block p-4 border-t">
             <button
               onClick={handleLogout}
               className="w-full flex items-center justify-center px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"

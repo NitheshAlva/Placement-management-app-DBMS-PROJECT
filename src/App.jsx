@@ -108,6 +108,7 @@ function AppContent() {
           <Route path="dashboard" element={<EmployerDashboard />} />
           <Route path="profile" element={<EmployerProfile />} />
           <Route path="jobs" element={<JobManagementPage />} />
+          <Route path="job/:jobid" element={<JobDetailsPage/>} />
           <Route path="applications" element={<EmployerApplicationsPage />} />
           <Route path="interviews" element={<EmployerInterviewPage />} />
           <Route path="placements" element={<EmployerPlacementsPage />} />
