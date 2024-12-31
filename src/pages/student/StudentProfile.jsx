@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
+import ResumeManager from './ResumeManager';
 
 const StudentProfile = () => {
   const [profile, setProfile] = useState({
@@ -176,6 +177,7 @@ const StudentProfile = () => {
               </Button>
             </div>
           </form>
+          <ResumeManager usn={usn}/>
         </div>
       </Card>
     </div>
