@@ -25,6 +25,7 @@ import JobManagementPage from './pages/employer/JobManagementPage';
 import EmployerApplicationsPage from './pages/employer/ApplicationsPage';
 import EmployerInterviewPage from './pages/employer/InterviewPage';
 import EmployerPlacementsPage from './pages/employer/PlacementsPage';
+import StudentProfileView from './pages/employer/StudentProfileView';
 
 // Import Authentication Pages
 import LandingPage from './pages/LandingPage';
@@ -107,6 +108,7 @@ function AppContent() {
         <Route path="/employer" element={<EmployerLayout />}>
           <Route path="dashboard" element={<EmployerDashboard />} />
           <Route path="profile" element={<EmployerProfile />} />
+          <Route path="student/:usn" element={<StudentProfileView />} />
           <Route path="jobs" element={<JobManagementPage />} />
           <Route path="job/:jobid" element={<JobDetailsPage/>} />
           <Route path="applications" element={<EmployerApplicationsPage />} />

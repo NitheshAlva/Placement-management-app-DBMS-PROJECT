@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import empService from '../../supabase/EmpService';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Eye } from 'lucide-react';
 
 const InterviewPage = () => {
   const [interviews, setInterviews] = useState([]);
@@ -175,6 +177,13 @@ const InterviewPage = () => {
                   <p className="text-sm text-gray-600">Round</p>
                   <p className="font-medium">{interview.round}</p>
                 </div>
+                <Link
+          to={`/employer/student/${interview.usn}`}
+          className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700"
+        >
+          <Eye className="w-3 h-3 mr-1" />
+          View Profile
+        </Link>
                 <div className="flex items-end">
                   <button 
                     onClick={() => handleDeleteInterview(interview.interview_id)}

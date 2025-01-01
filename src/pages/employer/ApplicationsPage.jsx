@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import empService from '../../supabase/EmpService';
 import { useSelector } from 'react-redux';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
+import { Eye } from 'lucide-react';
 
 const statusVariants = {
   'Pending': 'warning',
@@ -19,7 +21,16 @@ const ApplicationCard = ({ application, onUpdateStatus }) => (
     </div>
     <div>
       <p className="text-sm text-gray-600">Applicant USN</p>
-      <p className="font-medium text-gray-900">{application.usn}</p>
+      <div className="flex items-center justify-between">
+        <p className="font-medium text-gray-900">{application.usn}</p>
+        <Link
+          to={`/employer/student/${application.usn}`}
+          className="inline-flex items-center text-blue-600 hover:text-blue-700"
+        >
+          <Eye className="w-4 h-4 mr-1" />
+          View Profile
+        </Link>
+      </div>
     </div>
     <div>
       <p className="text-sm text-gray-600">Job ID</p>
@@ -60,7 +71,16 @@ const ApplicationRow = ({ application, onUpdateStatus }) => (
       <div className="font-medium text-gray-900">{application.title}</div>
     </td>
     <td className="p-4">
-      <div className="text-gray-900">{application.usn}</div>
+      <div className="flex items-center space-x-3">
+        <div className="text-gray-900">{application.usn}</div>
+        <Link
+          to={`/employer/student/${application.usn}`}
+          className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700"
+        >
+          <Eye className="w-3 h-3 mr-1" />
+          View Profile
+        </Link>
+      </div>
     </td>
     <td className="p-4">
       <div className="text-gray-600">{application.job_id}</div>
@@ -137,7 +157,7 @@ const ApplicationsPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="w-12 h-12 rounded-full border-4 border-blue-200 border-t-blue-500 animate-spin"></div>
       </div>
     );
   }
@@ -193,7 +213,7 @@ const ApplicationsPage = () => {
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200">
                     <th className="p-4 text-left text-sm font-medium text-gray-600">Job Title</th>
-                    <th className="p-4 text-left text-sm font-medium text-gray-600">Applicant USN</th>
+                    <th className="p-4 text-left text-sm font-medium text-gray-600">Applicant Info</th>
                     <th className="p-4 text-left text-sm font-medium text-gray-600">Job ID</th>
                     <th className="p-4 text-left text-sm font-medium text-gray-600">Status</th>
                     <th className="p-4 text-left text-sm font-medium text-gray-600">Actions</th>

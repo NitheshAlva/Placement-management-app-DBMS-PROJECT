@@ -71,24 +71,43 @@ const RegisterForm = ({ role, onSubmit, isLoading }) => {
             required
           />
           <div className="grid grid-cols-2 gap-4">
-            <Input
-              label="Year"
+          <div>
+            <label htmlFor="year" className="block text-sm font-medium text-gray-700">Year</label>
+            <select
               name="year"
-              type="number"
-              min="1"
-              max="4"
               value={formData.year}
               onChange={handleChange}
               required
-            />
-            <Input
-              label="Branch"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg
+          focus:ring-2 focus:ring-blue-500 focus:border-transparent
+          disabled:bg-gray-100 disabled:cursor-not-allowed"
+            >
+              <option value="">Select Year</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          
+          <div>
+            <label htmlFor="branch" className="block text-sm font-medium text-gray-700">Branch</label>
+            <select
               name="branch"
               value={formData.branch}
               onChange={handleChange}
               required
-            />
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+            >
+              <option value="">Select Branch</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Artificial Intelligence and Machine Learning">Artificial Intelligence and Machine Learning</option>
+              <option value="Information Science">Information Science</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Electronics">Electronics</option>
+            </select>
           </div>
+        </div>
           <Input
             label="CGPA"
             name="cgpa"
